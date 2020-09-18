@@ -1,0 +1,47 @@
+# Example Azure Devops pipeline
+#
+# This uses an AAD Service Principal to authenticate to Onefuzz.
+# See https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
+#
+# This example uses Azure Devops Personal Access Tokens to create work items upon finding crashes.
+# See https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate
+#
+# This uses the following variables, defined in the variable group 'onefuzz-config':
+# * endpoint: The Onefuzz Instance
+# * client_id: The Client ID for the service principal
+#
+# This uses the following secret variables, defined in the variable group 'onefuzz-config':
+# * client_secret: The Client Secret for the service principal
+# * ado_pat: The Azure Devops PAT
+
+trigger:
+- master
+
+jobs:
+- job: Example
+  pool:
+    vmImage: 'ubuntu-latest'
+  variables:
+  - group: onefuzz-config
+  steps:
+  - bash: |
+      set -ex
+      cd examples/simple-libfuzzer
+      make
+    displayName: Build
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+      architecture: 'x64'
+    displayName: setup python env  
+  - bash: |
+      set -ex
+      pip -q install onefuzz
+      onefuzz config --endpoint $(endpoint) --client_id $(client_id) --client_secret $(client_secret)
+      sed -i s/INSERT_PAT_HERE/${ado_pat}/ notifications/azure-devops-workitems.json
+      onefuzz template libfuzzer basic samples sample-1 $GITHUB_SHA --target_exe fuzz.exe --notification_config @../../notifications/azure-devops-workitems.json
+    displayName: submit onefuzz job
+    env:
+      client_secret: client_secret
+      ado_pat: ado_pat

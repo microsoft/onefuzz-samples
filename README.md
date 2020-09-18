@@ -1,3 +1,11 @@
+# Onefuzz Samples
+
+This git repo contains sample fuzzing targets, CICD pipelines, and notification
+configurations to launch the targets in
+[Onefuzz](https://github.com/microsoft/onefuzz).
+
+* [Example Github Actions Pipeline](.github/workflows/fuzzing.yml)
+* [Example Azure Devops Pipeline](.azure-pipeline.yml)
 
 # Contributing
 
