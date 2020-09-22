@@ -12,7 +12,7 @@ jobs:
           set -ex
           mkdir -p samples/linux-libfuzzer
           (cd examples/simple-libfuzzer ; make )
-          cp examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/seeds samples/linux-libfuzzer
+          cp -r examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/seeds samples/linux-libfuzzer
       - uses: actions/upload-artifact@v2.1.4
         with:
             name: samples
@@ -25,7 +25,7 @@ jobs:
           set -ex
           mkdir -p samples/windows-libfuzzer
           (cd examples/simple-libfuzzer ; make )
-          cp examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/fuzz.pdb examples/simple-libfuzzer/seeds samples/windows-libfuzzer
+          cp -r examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/fuzz.pdb examples/simple-libfuzzer/seeds samples/windows-libfuzzer
       - uses: actions/upload-artifact@v2.1.4
         with:
             name: samples
