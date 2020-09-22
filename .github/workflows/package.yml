@@ -22,11 +22,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          set -ex
           mkdir -p samples/windows-libfuzzer
-          (cd examples/simple-libfuzzer ; make )
-          cp -r examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/fuzz.pdb examples/simple-libfuzzer/seeds samples/windows-libfuzzer
-        shell: bash
+          Set-ExecutionPolicy Bypass -Scope Process -Force && Invoke-Expression (Invoke-RestMethod 'https://chocolatey.org/install.ps1')
+          choco install llvm
+          choco install make
+          cd examples/simple-libfuzzer
+          make
+          cp fuzz.exe,fuzz.pdb,seeds ../../samples/windows-libfuzzer -Recurse
+        shell: powershell
       - uses: actions/upload-artifact@v2.1.4
         with:
             name: samples
