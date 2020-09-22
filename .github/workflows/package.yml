@@ -17,7 +17,6 @@ jobs:
         with:
             name: samples
             path: samples
-jobs:
   windows_libfuzzer:
     runs-on: windows-latest
     steps:
