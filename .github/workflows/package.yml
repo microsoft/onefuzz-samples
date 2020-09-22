@@ -4,7 +4,7 @@ name: Package Samples
 on: [push, pull_request]
 
 jobs:
-  build:
+  linux_libfuzzer:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,6 +17,8 @@ jobs:
         with:
             name: samples
             path: samples
+jobs:
+  windows_libfuzzer:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
