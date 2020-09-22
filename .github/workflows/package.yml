@@ -13,6 +13,22 @@ jobs:
           mkdir -p samples/linux-libfuzzer
           (cd examples/simple-libfuzzer ; make )
           cp -r examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/seeds samples/linux-libfuzzer
+
+          mkdir -p samples/linux-libfuzzer-linked-library
+          (cd examples/linked-library ; make )
+          cp -r examples/linked-library/fuzz.exe examples/linked-library/*.so examples/linked-library/seeds samples/linux-libfuzzer-linked-library
+
+          mkdir -p samples/linux-libfuzzer-dlopen
+          (cd examples/dlopen ; make )
+          cp -r examples/dlopen/fuzz.exe examples/dlopen/*.so examples/dlopen/seeds samples/linux-libfuzzer-dlopen
+
+          mkdir -p samples/linux-trivial-crash
+          (cd examples/trivial-crash ; make )
+          cp -r examples/trivial-crash/fuzz.exe examples/trivial-crash/seeds samples/linux-trivial-crash
+
+          mkdir -p samples/linux-trivial-crash-asan
+          (cd examples/trivial-crash ; make clean; make CFLAGS='-fsanitize=address -fno-omit-frame-pointer')
+          cp -r examples/trivial-crash/fuzz.exe examples/trivial-crash/seeds samples/linux-trivial-crash-asan
       - uses: actions/upload-artifact@v2.1.4
         with:
             name: samples
@@ -22,14 +38,34 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          mkdir samples/windows-libfuzzer
           Set-ExecutionPolicy Bypass -Scope Process -Force 
+          $ProgressPreference = 'SilentlyContinue'
           Invoke-Expression (Invoke-RestMethod 'https://chocolatey.org/install.ps1')
           choco install llvm
           choco install make
+          $env:Path += ";C:\Program Files\LLVM\bin;C:\ProgramData\chocolatey\bin"
+
+          mkdir samples/windows-libfuzzer
           cd examples/simple-libfuzzer
           make
           cp fuzz.exe,fuzz.pdb,seeds ../../samples/windows-libfuzzer -Recurse
+          cd ../../
+
+          mkdir samples/windows-trivial-crash
+          cd examples/trivial-crash
+          make
+          cp fuzz.exe,fuzz.pdb,seeds ../../samples/windows-trivial-crash -Recurse
+          cd ../../
+
+          mkdir samples/windows-trivial-crash-asan
+          cd examples/trivial-crash
+          make
+          cp fuzz.exe,fuzz.pdb,seeds ../../samples/windows-trivial-crash -Recurse
+
+          mkdir samples/windows-trivial-crash-asan
+          cd examples/trivial-crash
+          make CFLAGS='-fsanitize=address -fno-omit-frame-pointer'
+          cp fuzz.exe,fuzz.pdb,seeds ../../samples/windows-trivial-crash-asan -Recurse
         shell: powershell
       - uses: actions/upload-artifact@v2.1.4
         with:
