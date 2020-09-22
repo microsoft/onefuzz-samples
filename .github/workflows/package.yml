@@ -1,0 +1,31 @@
+# Build & Package a sample set of fuzzing targets
+
+name: Package Samples
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          set -ex
+          mkdir -p samples/linux-libfuzzer
+          (cd examples/simple-libfuzzer ; make )
+          cp examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/seeds samples/linux-libfuzzer
+      - uses: actions/upload-artifact@v2.1.4
+        with:
+            name: samples
+            path: samples
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          set -ex
+          mkdir -p samples/windows-libfuzzer
+          (cd examples/simple-libfuzzer ; make )
+          cp examples/simple-libfuzzer/fuzz.exe examples/simple-libfuzzer/fuzz.pdb examples/simple-libfuzzer/seeds samples/windows-libfuzzer
+      - uses: actions/upload-artifact@v2.1.4
+        with:
+            name: samples
+            path: samples
