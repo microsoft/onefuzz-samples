@@ -10,7 +10,7 @@ OBJS=fuzz.c
 all: fuzz.exe
 
 fuzz.exe: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+	$(CC) -g3 $(CFLAGS) $(OBJS) -o $@
 
 .PHONY: clean
 
