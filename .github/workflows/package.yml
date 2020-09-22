@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          mkdir -p samples/windows-libfuzzer
+          mkdir samples/windows-libfuzzer
           Set-ExecutionPolicy Bypass -Scope Process -Force && Invoke-Expression (Invoke-RestMethod 'https://chocolatey.org/install.ps1')
           choco install llvm
           choco install make
