@@ -6,6 +6,7 @@ endif
 
 CC=clang
 OBJS=fuzz.c
+CFLAGS=-O3 -funroll-loops -Wall -D_FORTIFY_SOURCE=2 -g -Wno-pointer-sign
 
 all: fuzz.exe
 

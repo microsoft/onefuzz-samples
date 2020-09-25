@@ -4,7 +4,7 @@ name: Package Samples
 on: [push, pull_request]
 
 jobs:
-  linux_libfuzzer:
+  linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,11 +29,20 @@ jobs:
           mkdir -p samples/linux-trivial-crash-asan
           (cd examples/trivial-crash ; make clean; make CFLAGS='-fsanitize=address -fno-omit-frame-pointer')
           cp -r examples/trivial-crash/fuzz.exe examples/trivial-crash/seeds samples/linux-trivial-crash-asan
+
+          # AFL v2.75b
+          mkdir -p samples/linux-trivial-crash-afl
+          git clone https://github.com/google/AFL
+          (cd AFL; git checkout 82b5e359463238d790cadbe2dd494d6a4928bff3; make afl-gcc afl-fuzz afl-as)
+          export AFL_CC_PATH=$PWD/AFL/afl-clang
+          (cd examples/trivial-crash ; make clean; make CC=$AFL_CC_PATH)
+          cp -r examples/trivial-crash/fuzz.exe examples/trivial-crash/seeds samples/linux-trivial-crash-afl
+
       - uses: actions/upload-artifact@v2.1.4
         with:
             name: samples
             path: samples
-  windows_libfuzzer:
+  windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
