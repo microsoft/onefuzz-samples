@@ -11,7 +11,5 @@ examples](https://github.com/dvyukov/go-fuzz-corpus).
 
 ```bash
 make
-onefuzz template libfuzzer basic golang-sample basic-example build-1 linux --target_exe ./fuzz.exe --inputs ./seeds
+onefuzz template libfuzzer basic $PROJECT_NAME $TARGET_NAME $BUILD_NUMBER $POOL_NAME --target_exe ./fuzz.exe --inputs ./seeds
 ```
-
-NOTE: This assumes a [pool](https://github.com/microsoft/onefuzz/blob/main/docs/terminology.md#pool) named `linux`.
