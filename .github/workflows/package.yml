@@ -30,6 +30,10 @@ jobs:
           (cd examples/trivial-crash ; make clean; make CFLAGS='-fsanitize=address -fno-omit-frame-pointer')
           cp -r examples/trivial-crash/fuzz.exe examples/trivial-crash/seeds samples/linux-trivial-crash-asan
 
+          mkdir -p samples/linux-libfuzzer-rust
+          (cd examples/rust ; make )
+          cp -r examples/rust/fuzz/target/x86_64-unknown-linux-gnu/release/fuzz_target_1 samples/linux-libfuzzer-rust
+
           # AFL v2.75b
           mkdir -p samples/linux-trivial-crash-afl
           git clone https://github.com/google/AFL
