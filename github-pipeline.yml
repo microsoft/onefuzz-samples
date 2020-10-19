@@ -3,7 +3,7 @@
 # This uses an AAD Service Principal to authenticate to Onefuzz.
 # See https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
 #
-# This uses a Microsoft Teams Incoming Webhook to create Teames messages upon finding crashes.
+# This uses a Microsoft Teams Incoming Webhook to create Teams messages upon finding crashes.
 # See https://github.com/microsoft/onefuzz/blob/main/docs/notifications/teams.md
 #
 # This uses the following variables, defined in the variable group 'onefuzz-config':
