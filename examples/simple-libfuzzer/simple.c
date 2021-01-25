@@ -48,6 +48,16 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t len) {
         int* p = malloc(sizeof(int)); free(p); *p = 123;
         break;
       }
+      case '6': {
+        // heap-buffer-overflow
+        int* p = malloc(8 * sizeof(int)); for (int i = 0; i < 32; i++) { *(p + i) = 0; }
+        break;
+      }
+      case '7': {
+        // fpe
+        int x = 0; int y = 123 / x;
+        break;
+      }
     }
   }
 
