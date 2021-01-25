@@ -38,6 +38,16 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t len) {
         int *p = &cnt; free(p);
         break;
       }
+      case '4': {
+        // double-free
+        int* p = malloc(sizeof(int)); free(p); free(p);
+        break;
+      }
+      case '5': {
+        // heap-use-after-free
+        int* p = malloc(sizeof(int)); free(p); *p = 123;
+        break;
+      }
     }
   }
 
