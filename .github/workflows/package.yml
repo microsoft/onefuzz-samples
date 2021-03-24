@@ -74,7 +74,7 @@ jobs:
           cd examples/trivial-crash
           make CFLAGS='-fsanitize=address -fno-omit-frame-pointer'
           cp fuzz.exe,fuzz.pdb,seeds ../../samples/windows-trivial-crash-asan -Recurse
-          
+          cd ../../ 
           
           mkdir samples/windows-calendar-app
           cd examples/calendar-app
@@ -85,6 +85,7 @@ jobs:
           make
           cd ../
           cp calendar*/*.pdb,calendar*/*.exe, calendar*/*.dll ../../samples/windows-calendar-app
+          cd ../../ 
         shell: powershell
       - uses: actions/upload-artifact@v2.1.4
         with:
