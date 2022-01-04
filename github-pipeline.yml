@@ -8,10 +8,10 @@
 #
 # This uses the following variables, defined in the variable group 'onefuzz-config':
 # * endpoint: The Onefuzz Instance
-# * client_id: The Client ID for the service principal
+# * client_id: The Client ID of the cli registration
 #
 # This uses the following secret variables, defined in the variable group 'onefuzz-config':
-# * client_secret: The Client Secret for the service principal
+# * client_secret: The Client Secret the cli registration
 # * teams_url: The Incoming Webhook for Teams
 
 name: Onefuzz Sample Pipeline
