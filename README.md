@@ -7,6 +7,20 @@ configurations to launch the targets in
 * [Example Github Actions Pipeline](github-pipeline.yml)
 * [Example Azure Devops Pipeline](azure-devops-pipeline.yml)
 
+We currently support the following samples and crash types: 
+
+* linux-libfuzzer
+* linux-libfuzzer-dlopen
+* linux-libfuzzer-linked-library
+* linux-libfuzzer-rust
+* linux-trivial-crash
+* linux-trivial-crash-afl
+* linux-trivial-crash-asan
+* windows-calendar-app
+* windows-libfuzzer
+* windows-trivial-crash
+* windows-trivial-crash-asan
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
