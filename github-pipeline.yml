@@ -44,7 +44,7 @@ jobs:
         run: |
           set -ex
           pip install onefuzz
-          onefuzz config --endpoint $ONEFUZZ_ENDPOINT --client_id $ONEFUZZ_CLIENT_ID --client_secret $ONEFUZZ_CLIENT_SECRET
+          onefuzz config --endpoint $ONEFUZZ_ENDPOINT --client_id $ONEFUZZ_CLIENT_ID
           sed -i s/INSERT_TEAMS_WEBHOOK_URL_HERE/${ONEFUZZ_TEAMS_URL}/ notifications/teams-message.json
           cd examples/simple-libfuzzer
           onefuzz template libfuzzer basic samples sample-1 $GITHUB_SHA --target_exe fuzz.exe --notification_config @../../notifications/teams-message.json
